@@ -7,8 +7,11 @@ import Home from "@/pages/home.vue";
 import Login from "@/pages/index.vue";
 import Program from "@/pages/program.vue";
 import AddProgram from "@/pages/addProgram.vue";
-import ourProjectsVue from "@/pages/ourProjects.vue";
 import addProjectVue from "@/pages/addProject.vue";
+import projectVue from "@/pages/project.vue";
+import projectsLayoutVue from "@/layouts/projectsLayout.vue";
+import newPostVue from "@/pages/newPost.vue";
+import mediaVue from "@/pages/media.vue";
 
 const staticRoutes = [
   {
@@ -33,14 +36,31 @@ const staticRoutes = [
         component: AddProgram,
       },
       {
-        path: "ourProjects",
-        name: "ourProjects",
-        component: ourProjectsVue,
+        path: "media",
+        name: "media",
+        component: mediaVue,
+      },
+      {
+        path: "projects",
+        name: "projects",
+        component: projectsLayoutVue,
+        children: [
+          {
+            path: ":project",
+            name: "project",
+            component: projectVue,
+          },
+        ],
       },
       {
         path: "addProject",
         name: "addProject",
         component: addProjectVue,
+      },
+      {
+        path: "newPost",
+        name: "newPost",
+        component: newPostVue,
       },
       {
         path: ":program",

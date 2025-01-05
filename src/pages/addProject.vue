@@ -335,7 +335,7 @@ export default {
       const uploadTasks = [];
 
       if (this.projectData.image) {
-        uploadTasks.push(this.uploadFile(this.projectData.image, `projects/heroImage`, 'heroImage'));
+        uploadTasks.push(this.uploadFile(this.projectData.image, `projects/heroImage/${new Date()}`, 'heroImage'));
 
         // Upload extra images
         const extras = [
@@ -347,7 +347,7 @@ export default {
         extras.forEach((file, index) => {
           if (file) {
             uploadTasks.push(
-              this.uploadFile(file, `projects/extraImage${index + 1}`, 'extra')
+              this.uploadFile(file, `projects/extraImage${index + 1}/${new Date()}`, 'extra')
             );
           }
         });

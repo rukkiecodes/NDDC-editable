@@ -62,7 +62,6 @@
         <v-menu open-on-hover>
           <template #activator="{ props }">
             <v-btn
-              to="/ourProjects"
               color="dark"
               class="text-capitalize mr-5"
               v-bind="props"
@@ -72,19 +71,12 @@
           </template>
           <v-list>
             <v-list-item
-              to="/ourProjects"
+              v-for="(project, index) in projects"
+              :key="index"
+              :to="`projects/${project}`"
               value="Road Construction"
             >
               <v-list-item-title>Road Construction</v-list-item-title>
-            </v-list-item>
-            <v-list-item value="Electrical Development">
-              <v-list-item-title>Electrical Development</v-list-item-title>
-            </v-list-item>
-            <v-list-item value="Water Supply">
-              <v-list-item-title>Water Supply</v-list-item-title>
-            </v-list-item>
-            <v-list-item value="School Development">
-              <v-list-item-title>School Development</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
@@ -182,6 +174,14 @@
         >
           Contact Us
         </v-btn>
+
+        <v-btn
+          class="text-capitalize mr-5"
+          color="green-darken-3"
+          to="/newPost"
+        >
+          New Post
+        </v-btn>
       </v-app-bar>
 
       <router-view />
@@ -194,35 +194,30 @@
 <script>
 import { db } from '@/firebase';
 import { doc, onSnapshot } from 'firebase/firestore';
-import { addDynamicRoute } from "@/router"
 
 export default {
   data: () => ({
-    programs: null
+    programs: null,
+    projects: null
   }),
 
   mounted () {
-    this.getRealTimeUpdate()
+    this.getRealTimeProgramsUpdate()
+    this.getRealTimeProjectUpdate()
   },
 
   methods: {
-    addCustomRoute () {
-      const newRoute = {
-        path: "/program",
-        name: "program",
-        component: () => import("@/pages/program.vue"), // Lazy load the component
-        meta: { requiresAuth: false },
-      };
-
-      addDynamicRoute(newRoute);
-
-      // Navigate to the newly added route
-      this.$router.push({ name: "program" });
-    },
-
-    async getRealTimeUpdate () {
+    async getRealTimeProgramsUpdate () {
       const unsub = onSnapshot(doc(db, 'web', 'ourPrograms'), (doc) => {
         this.programs = doc.data();
+      });
+
+      return unsub
+    },
+
+    async getRealTimeProjectUpdate () {
+      const unsub = onSnapshot(doc(db, 'web', 'ourProjects'), (doc) => {
+        this.projects = doc.data();
       });
 
       return unsub

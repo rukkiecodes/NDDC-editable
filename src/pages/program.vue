@@ -185,7 +185,7 @@
 <script>
 import { db } from '@/firebase';
 import { collection, doc, onSnapshot, query, updateDoc, where } from 'firebase/firestore';
-import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 
 export default {
   data: () => ({

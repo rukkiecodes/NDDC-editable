@@ -332,7 +332,7 @@ export default {
       try {
         // Initialize Firebase Storage
         const storage = getStorage();
-        const storageRef = ref(storage, `program-images/${this.programData.image.name}`);
+        const storageRef = ref(storage, `program-images/${this.programData.image.name}/${new Date()}`);
         const uploadTask = uploadBytesResumable(storageRef, this.programData.image);
 
         // Monitor the upload process
