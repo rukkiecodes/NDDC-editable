@@ -1,225 +1,240 @@
 <template>
   <div>
-    <v-container class="my-16">
-      <p class="text-h3 mb-5 font-weight-bold text-grey-darken-2">
-        Please enter a title for this program
-      </p>
-      <v-text-field
-        v-model="programData.title"
-        label="Program Title"
-        variant="underlined"
-        height="70"
-        color="green-darken-3"
-        class="font-weight-bold"
-      />
-
-      <v-btn
-        class="text-capitalize"
-        color="green-darken-3"
-        rounded="0"
-        :elevation="0"
-        @click="saveProgram"
-      >
-        Save program
-      </v-btn>
-    </v-container>
-
-    <v-sheet class="mb-16">
-      <v-container class="py-16">
-        <v-row>
-          <v-col
-            cols="12"
-            sm="5"
-          >
-            <v-sheet
-              color="transparent"
-              max-width="700"
-            >
-              <p
-                class="text-green-darken-3 font-weight-black text-h3 mb-4"
-                @click="openDialog(programData.heading || 'Program Heading', '', 'heading', false)"
-              >
-                {{ programData.heading || 'Program Heading' }}
-              </p>
-
-              <p
-                class="text-grey-darken-3 text-h6 my-5"
-                @click="openDialog(programData.about || 'about the program', '', 'about', false)"
-              >
-                {{ programData.about || 'about the program' }}
-              </p>
-
-              <div class="right d-flex">
-                <v-sheet
-                  class="pa-2 d-flex align-center"
-                  border="sm"
-                  height="50"
-                  width="300"
-                >
-                  <input
-                    type="text"
-                    placeholder="Enter your email address"
-                    class="contact-input"
-                    style="flex: 1"
-                  >
-                </v-sheet>
-                <v-btn
-                  class="text-capitalize"
-                  rounded="0"
-                  color="green-darken-4"
-                  height="50"
-                  :elevation="0"
-                >
-                  Register
-                  Now
-                </v-btn>
-              </div>
-
-              <div class="d-flex mt-5">
-                <div class="d-flex mr-5 align-center">
-                  <p
-                    class="text-h4 font-weight-bold mr-2"
-                    @click="openDialog(programData.t1 || '3000+', '', 't1', false)"
-                  >
-                    {{ programData.t1 || '3000+' }}
-                  </p>
-                  <p
-                    class="text-grey-darken-2"
-                    @click="openDialog(programData.t2 || 'some text', '', 't2', false)"
-                  >
-                    {{ programData.t2 || 'some text' }}
-                  </p>
-                </div>
-                <div class="d-flex align-center">
-                  <p
-                    class="text-h4 font-weight-bold mr-2"
-                    @click="openDialog(programData.t3 || '20+', '', 't3', false)"
-                  >
-                    {{ programData.t3 || '20+' }}
-                  </p>
-                  <p
-                    class="text-grey-darken-2"
-                    @click="openDialog(programData.t4 || 'some text', '', 't4', false)"
-                  >
-                    {{ programData.t4 || 'some text' }}
-                  </p>
-                </div>
-              </div>
-            </v-sheet>
-          </v-col>
-
-          <v-col
-            cols="12"
-            sm="7"
-          >
-            <input
-              ref="fileInput"
-              type="file"
-              accept="image/*"
-              style="display: none"
-              @change="handleImageUpload"
-            >
-            <v-img
-              v-if="heroImage"
-              :src="heroImage"
-              height="350"
-              rounded="lg"
-              class="cursor-pointer"
-              @click="triggerFileInput"
-            />
-            <v-sheet
-              v-else
-              height="350"
-              rounded="lg"
-              border="sm"
-              class="d-flex align-center justify-center cursor-pointer"
-              @click="triggerFileInput"
-            >
-              <p class="text-h1 font-weight-bold text-grey-darken-2">
-                Add Image
-              </p>
-            </v-sheet>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-sheet>
-
-    <v-sheet
-      class="my-16 py-16"
-      style="position: relative;"
-    >
-      <v-img
-        src="@/assets/smallSpots.png"
-        width="100"
-        height="100"
-        cover
-        style="position: absolute; top: 0; right: 0;"
-      />
-      <v-img
-        src="@/assets/bigSpots.png"
-        width="100"
-        height="100"
-        cover
-        style="position: absolute; bottom: 0; left: 0;"
-      />
-
-      <v-sheet
-        class="text-center mx-auto"
-        width="600"
-      >
-        <p
-          class="text-h4 font-weight-bold"
-          @click="openDialog(programData.subheading || 'Subheading', '', 'subheading', false)"
-        >
-          {{ programData.subheading || 'Subheading' }}
-        </p>
-        <p
-          class="text-body-1 text-grey-darken-3 mt-5"
-          @click="openDialog(programData.subheadingContext || 'About the context of the subheading', '', 'subheadingContext', false)"
-        >
-          {{ programData.subheadingContext || 'About the context of the subheading' }}
-        </p>
-      </v-sheet>
-    </v-sheet>
-
     <v-container>
-      <v-sheet
-        class="text-center mx-auto"
-        width="600"
-      >
-        <p
-          class="text-h4 font-weight-bold"
-          @click="openDialog(programData.t5 || 'The Success Stories Of The Past Few Years', '', 't5', false)"
-        >
-          {{ programData.t5 || 'The Success Stories Of The Past Few Years' }}
+      <div class="my-16">
+        <p class="block-text text-h5 text-sm-h3 font-weight-bold">
+          Add a New Program to the NDDS Program List
         </p>
-        <p
-          class="text-body-1 text-grey-darken-3 mt-5"
-          @click="openDialog(programData.t6 || 'Say something about the success stories', '', 't6', false)"
-        >
-          {{ programData.t6 || 'Say something about the success stories' }}
+        <p class="main-text text-body-2 text-sm-body-1 mt-2">
+          Streamline your Program submission process and ensure your initiatives are part of the NDDS portfolio.
         </p>
-      </v-sheet>
+      </div>
 
-      <v-row class="mt-10">
+
+      <v-row>
         <v-col
-          v-for="n in 6"
-          :key="n"
           cols="12"
-          sm="4"
+          sm="6"
         >
-          <v-sheet
-            border="sm"
-            height="300"
-            class="d-flex justify-center align-center"
+          <div
+            id="addProgameImage"
+            class="d-flex mt-10 mb-5 cursor-pointer"
           >
-            <p class="text-h6">
-              Blogs on this subject goes here
+            <span class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3">#</span>
+            <p class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2">
+              Add program Images
             </p>
-          </v-sheet>
+          </div>
+          <v-card
+            height="500"
+            rounded="lg"
+            @click="pickBannerImage"
+          >
+            <v-card-text
+              class="d-flex justify-center align-center pa-0"
+              style="height: 100%"
+            >
+              <v-img
+                cover
+                :src="heroImage"
+                class="d-flex justify-center align-center text-center"
+              >
+                <p class="block-text text-grey-darken-2 text-h6 text-sm-h4">
+                  Add banner image
+                </p>
+              </v-img>
+            </v-card-text>
+          </v-card>
+
+          <v-divider class="my-16" />
+
+          <div
+            id="addProgramDate"
+            class="d-flex mt-10 mb-5 cursor-pointer"
+          >
+            <span class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3">#</span>
+            <p class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2">
+              Add program Date
+            </p>
+          </div>
+
+          <v-switch
+            v-model="isProgramOpen"
+            label="Is the program open for applications?"
+            color="green-darken-3"
+            inset
+          />
+
+          <v-row no-gutters>
+            <v-col
+              cols="12"
+              sm="6"
+            >
+              <v-date-picker
+                v-model="openingDate"
+                show-adjacent-months
+                :disabled="!isProgramOpen"
+                title="Opening Date"
+              />
+            </v-col>
+
+            <v-col
+              cols="12"
+              sm="6"
+            >
+              <v-date-picker
+                show-adjacent-months
+                :disabled="!isProgramOpen"
+                title="Closing Date"
+              />
+            </v-col>
+          </v-row>
+        </v-col>
+
+
+        <v-col
+          cols="12"
+          sm="6"
+        >
+          <div id="programTitle">
+            <div class="d-flex mt-10 mb-5 cursor-pointer">
+              <span class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3">#</span>
+              <p class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2">
+                Program Title
+              </p>
+            </div>
+
+            <v-text-field
+              v-model="programTitle"
+              label="Program Title"
+              variant="outlined"
+            />
+
+            <v-chip
+              v-for="(item, index) in programs?.programs"
+              :key="index"
+              class="main-text mr-2 cursor-pointer"
+              @click="programTitle = item"
+            >
+              {{ item }}
+            </v-chip>
+          </div>
+
+          <v-divider class="my-16" />
+
+          <div id="programHeadingAndAbout">
+            <div class="d-flex mt-10 mb-5 cursor-pointer">
+              <span class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3">#</span>
+              <p class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2">
+                About this program
+              </p>
+            </div>
+
+            <v-text-field
+              v-model="programHeading"
+              variant="outlined"
+              label="Program heading"
+            />
+
+            <v-textarea
+              v-model="programDescription"
+              label="Program Description"
+              variant="outlined"
+            />
+
+            <div class="d-flex mt-5">
+              <div class="d-flex mr-5 align-center">
+                <p
+                  class="text-h4 font-weight-bold mr-2"
+                  @click="openDialog(programData.placeholderCount1 || '3000+', '', 'placeholderCount1', false)"
+                >
+                  {{ programData.placeholderCount1 || '3000+' }}
+                </p>
+                <p
+                  class="text-grey-darken-2"
+                  @click="openDialog(programData.placeholderText1 || 'some text', '', 'placeholderText1', false)"
+                >
+                  {{ programData.placeholderText1 || 'some text' }}
+                </p>
+              </div>
+              <div class="d-flex align-center">
+                <p
+                  class="text-h4 font-weight-bold mr-2"
+                  @click="openDialog(programData.placeholderCount2 || '20+', '', 'placeholderCount2', false)"
+                >
+                  {{ programData.placeholderCount2 || '20+' }}
+                </p>
+                <p
+                  class="text-grey-darken-2"
+                  @click="openDialog(programData.placeholderText2 || 'some text', '', 'placeholderText2', false)"
+                >
+                  {{ programData.placeholderText2 || 'some text' }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <v-divider class="my-16" />
+
+          <div id="subheading">
+            <div class="d-flex mt-10 mb-5 cursor-pointer">
+              <span class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3">#</span>
+              <p class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2">
+                Program sub-section
+              </p>
+            </div>
+
+            <v-text-field
+              v-model="subheading"
+              variant="outlined"
+              label="Program subheading"
+            />
+
+            <v-textarea
+              v-model="subheadingText"
+              label="Subheading Description"
+              variant="outlined"
+            />
+          </div>
+
+          <v-divider class="my-16" />
+
+          <div id="story">
+            <div class="d-flex mt-10 mb-5 cursor-pointer">
+              <span class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3">#</span>
+              <p class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2">
+                Program Success Story
+              </p>
+            </div>
+            
+            <v-text-field
+              v-model="storyHeading"
+              variant="outlined"
+              label="Program Success story heading"
+            />
+
+            <v-textarea
+              v-model="story"
+              label="Program story"
+              variant="outlined"
+            />
+          </div>
         </v-col>
       </v-row>
     </v-container>
+
+    <v-btn
+      position="fixed"
+      location="bottom right"
+      class="ma-16 main-text text-capitalize"
+      size="x-large"
+      rounded="pill"
+      color="green-darken-3"
+      :loading="loading"
+      @click="saveProgram"
+    >
+      Save Program
+    </v-btn>
 
     <v-dialog
       v-model="dialog"
@@ -231,14 +246,10 @@
         title="Update web content"
       >
         <v-card-text>
-          <v-textarea
-            v-model="dialogProps.text"
-            label="Text"
-          />
           <v-text-field
-            v-if="dialogProps.isLink"
-            v-model="dialogProps.link"
-            label="Link"
+            v-model="dialogProps.text"
+            variant="outlined"
+            label="Text"
           />
         </v-card-text>
 
@@ -255,53 +266,52 @@
 </template>
 
 <script>
-import { db } from "@/firebase";
-import { addDoc, arrayUnion, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { db } from '@/firebase';
+import { addDoc, arrayUnion, collection, doc, onSnapshot, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 
 export default {
   data: () => ({
-    heroImage: null,
+    programs: [],
     dialog: false,
-    dialogProps: {
-      text: '',
-      link: '',
-      field: '',
-      isLink: false
-    },
+
+    heroImage: null,
+    image: null,
+
+    programTitle: '',
+    programHeading: '',
+    programDescription: '',
+
     programData: {
-      title: '',
-      heading: '',
-      about: '',
-      t1: '',
-      t2: '',
-      t3: '',
-      t4: '',
-      image: null,
-      subheading: '',
-      subheadingContext: '',
-      t5: '',
-      t6: '',
-    }
+      placeholderCount1: '',
+      placeholderCount2: '',
+      placeholderText1: '',
+      placeholderText2: '',
+    },
+
+    subheading: '',
+    subheadingText: '',
+
+    storyHeading: '',
+    story: '',
+
+    isProgramOpen: false,
+    openingDate: null,
+    closingDate: null,
+
+    loading: false
   }),
 
+  mounted () {
+    this.getRealTimeProjectUpdate()
+  },
+
   methods: {
-    triggerFileInput () {
-      this.$refs.fileInput.click();
-    },
-
-    handleImageUpload (event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        this.programData.image = file
-
-        reader.onload = (e) => {
-          this.heroImage = e.target.result; // Base64 image preview
-        };
-
-        reader.readAsDataURL(file);
-      }
+    async getRealTimeProjectUpdate () {
+      const unsub = onSnapshot(doc(db, 'web', 'ourPrograms'), (doc) => {
+        this.programs = doc.data();
+      });
+      return unsub;
     },
 
     openDialog (text, link, field, isLink) {
@@ -323,17 +333,39 @@ export default {
       this.dialog = false
     },
 
+    pickBannerImage () {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/*";
+
+      input.onchange = async (event) => {
+        const file = event.target.files[0];
+
+        if (file) {
+          const reader = new FileReader();
+          this.image = file
+
+          reader.onload = (e) => {
+            this.heroImage = e.target.result;
+          };
+
+          reader.readAsDataURL(file);
+        }
+      };
+
+      input.click();
+    },
+
     saveProgram () {
-      if (!this.programData.image) {
-        alert("No image selected!");
-        return;
-      }
+      if (!this.image) return alert("No image selected!")
 
       try {
         // Initialize Firebase Storage
         const storage = getStorage();
-        const storageRef = ref(storage, `program-images/${this.programData.image.name}/${new Date()}`);
-        const uploadTask = uploadBytesResumable(storageRef, this.programData.image);
+        const storageRef = ref(storage, `program-images/${this.image.name}/${new Date()}`);
+        const uploadTask = uploadBytesResumable(storageRef, this.image);
+
+        this.loading = true
 
         // Monitor the upload process
         uploadTask.on(
@@ -352,31 +384,37 @@ export default {
             console.log("path:", uploadTask.snapshot.ref.fullPath);
 
             await addDoc(collection(db, 'programs'), {
-              title: this.programData.title,
-              heading: this.programData.heading,
-              about: this.programData.about,
-              t1: this.programData.t1,
-              t2: this.programData.t2,
-              t3: this.programData.t3,
-              t4: this.programData.t4,
-              subheading: this.programData.subheading,
-              subheadingContext: this.programData.subheadingContext,
-              t5: this.programData.t5,
-              t6: this.programData.t6,
+              programTitle: this.programTitle,
+              programHeading: this.programHeading,
+              programDescription: this.programDescription,
+
+              shortStats: this.programData,
+
+              subheading: this.subheading,
+              subheadingText: this.subheadingText,
+
+              storyHeading: this.storyHeading,
+              story: this.story,
+
+              isProgramOpen: this.isProgramOpen,
+              openingDate: this.openingDate,
+              closingDate: this.closingDate,
               image: { path: uploadTask.snapshot.ref.fullPath, uri: downloadURL },
               timestamp: serverTimestamp()
             })
 
             await updateDoc(doc(db, 'web', 'ourPrograms'), {
-              programs: arrayUnion(this.programData.title),
+              programs: arrayUnion(this.programTitle),
               timestamp: serverTimestamp()
             })
 
             // Save the download URL to your program data
             this.heroImage = downloadURL;
-            alert("Image uploaded successfully!");
+            alert("Program uploaded successfully!");
+            this.loading = false
           }
         );
+        
       } catch (error) {
         console.error("Error uploading image:", error);
       }

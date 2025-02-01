@@ -70,7 +70,7 @@ const signIn = async () => {
     localStorage.setItem('NDDC_user', JSON.stringify(user));
 
     // Redirect to home page
-    router.push('/home');
+    router.push('/');
   } catch (error) {
     console.error('Login failed:', error.message);
 

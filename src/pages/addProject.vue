@@ -1,286 +1,358 @@
 <template>
   <div>
-    <v-container class="my-16">
-      <p class="text-h3 mb-5 font-weight-bold text-grey-darken-2">
-        Please enter a title for this project
-      </p>
-      <p>EG. Road construction, Electrical development. e,t,c</p>
-      <v-text-field
-        v-model="projectData.title"
-        label="Project Title"
-        variant="underlined"
-        height="70"
-        color="green-darken-3"
-        class="font-weight-bold"
-      />
-      <v-text-field
-        v-model="projectData.videoLink"
-        label="Video link"
-        variant="underlined"
-        height="70"
-        color="green-darken-3"
-        class="font-weight-bold"
-      />
+    <v-container>
+      <div class="my-16">
+        <p class="block-text text-h5 text-sm-h3 font-weight-bold">
+          Add a New Project to the NDDS Project List
+        </p>
+        <p class="main-text text-body-2 text-sm-body-1 mt-2">
+          Streamline your project submission process and ensure your initiatives are part of the NDDS portfolio.
+        </p>
+      </div>
 
-      <v-btn
-        class="text-capitalize"
-        color="green-darken-3"
-        rounded="0"
-        :elevation="0"
-        @click="saveProject"
-      >
-        Save project
-      </v-btn>
-    </v-container>
-
-    <v-img
-      :src="heroImage || '@/assets/delta-roads.png'"
-      class="d-flex justify-center align-center"
-      :height="600"
-      cover
-    >
-      <v-sheet
-        height="600"
-        color="rgba(0,0,0,0.6)"
-        class="d-flex align-center"
-      >
-        <v-sheet
-          color="transparent"
-          width="700"
-          class="mx-auto text-center"
-        >
-          <p
-            class="text-white font-weight-black text-h2 mb-2"
-            @click="openDialog(projectData.heading || 'Project Heading', '', 'heading', false)"
-            v-text="projectData.heading || 'Project Heading'"
-          />
-
-          <p
-            class="text-white text-h6 my-5"
-            @click="openDialog(projectData.about || 'about the project', '', 'about', false)"
-            v-text="projectData.about || 'about the project'"
-          />
-
-          <v-btn
-            class="text-capitalize"
-            :elevation="0"
-            prepend-icon="mdi-play-circle-outline"
-            variants="outlined"
-            rounded="0"
-            color="green-darken-3"
-          >
-            Watch our video
-          </v-btn>
-        </v-sheet>
-      </v-sheet>
-    </v-img>
-
-
-
-
-
-    <v-sheet class="mb-16">
-      <v-container>
-        <v-row>
-          <v-col cols="12">
-            <v-file-input
-              label="Banner image"
-              variant="underlined"
-              accept="image/*"
-              @change="changeBannerImage"
-            />
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-sheet>
-
-
-
-    <v-container class="my-16">
-      <v-row class="align-end">
+      <v-row>
         <v-col
           cols="12"
-          sm="7"
+          sm="6"
         >
-          <p
-            class="text-h4 font-weight-bold mb-5"
-            @click="openDialog(projectData.t1 || 'The 25.7-kilometre Ogbia-Nembe Road', '', 't1', false)"
-            v-text="projectData.t1 || 'Title'"
-          />
-          <v-textarea
-            v-model="projectData.t2"
-            label="Say something"
-            variant="outlined"
-          />
+          <div id="addProjectImages">
+            <div class="d-flex mt-10 mb-5 cursor-pointer">
+              <span class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3">#</span>
+              <p class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2">
+                Add project Images
+              </p>
+            </div>
 
-          <v-row>
-            <v-col
-              cols="12"
-              sm="6"
-            >
-              <!-- image 1 -->
-              <v-img
-                :src="extraImages.image1"
-                height="300"
-                cover
-                class="d-flex align-center justify-center text-center bg-grey"
-                @click="pickExtraImage('image1')"
-              >
-                <p class="text-h4 font-weight-bold">
-                  Add Image
-                </p>
-              </v-img>
-            </v-col>
+            <v-row class="mt-10">
+              <v-col cols="12">
+                <v-card
+                  height="500"
+                  rounded="lg"
+                  @click="pickBannerImage"
+                >
+                  <v-card-text
+                    class="d-flex justify-center align-center"
+                    style="height: 100%"
+                  >
+                    <v-img
+                      cover
+                      :src="heroImage"
+                      class="d-flex justify-center align-center text-center"
+                    >
+                      <p class="block-text text-grey-darken-2 text-h6 text-sm-h4">
+                        Add banner image
+                      </p>
+                    </v-img>
+                  </v-card-text>
+                </v-card>
+              </v-col>
 
-            <v-col
-              cols="12"
-              sm="6"
-            >
-              <!-- image 2 -->
-              <v-img
-                :src="extraImages.image2"
-                height="300"
-                cover
-                class="d-flex align-center justify-center text-center bg-grey"
-                @click="pickExtraImage('image2')"
-              >
-                <p class="text-h4 font-weight-bold">
-                  Add Image
-                </p>
-              </v-img>
-            </v-col>
-          </v-row>
+              <v-col cols="12">
+                <v-row>
+                  <v-col
+                    cols="6"
+                    sm="6"
+                  >
+                    <v-card
+                      height="250"
+                      rounded="lg"
+                      @click="pickExtraImage('image1')"
+                    >
+                      <v-card-text
+                        class="d-flex justify-center align-center pa-0"
+                        style="height: 100%"
+                      >
+                        <v-img
+                          cover
+                          :src="extraImages.image1"
+                          class="d-flex justify-center align-center text-center"
+                        >
+                          <p class="block-text text-grey-darken-2 text-h6 text-sm-h4">
+                            Add project image
+                          </p>
+                        </v-img>
+                      </v-card-text>
+                    </v-card>
+                  </v-col>
+                  <v-col
+                    cols="6"
+                    sm="6"
+                  >
+                    <v-card
+                      height="250"
+                      rounded="lg"
+                      @click="pickExtraImage('image2')"
+                    >
+                      <v-card-text
+                        class="d-flex justify-center align-center"
+                        style="height: 100%"
+                      >
+                        <v-img
+                          cover
+                          :src="extraImages.image2"
+                          class="d-flex justify-center align-center text-center"
+                        >
+                          <p class="block-text text-grey-darken-2 text-h6 text-sm-h4">
+                            Add project image
+                          </p>
+                        </v-img>
+                      </v-card-text>
+                    </v-card>
+                  </v-col>
+                  <v-col
+                    cols="6"
+                    sm="6"
+                  >
+                    <v-card
+                      height="250"
+                      rounded="lg"
+                      @click="pickExtraImage('image3')"
+                    >
+                      <v-card-text
+                        class="d-flex justify-center align-center"
+                        style="height: 100%"
+                      >
+                        <v-img
+                          cover
+                          :src="extraImages.image3"
+                          class="d-flex justify-center align-center text-center"
+                        >
+                          <p class="block-text text-grey-darken-2 text-h6 text-sm-h4">
+                            Add project image
+                          </p>
+                        </v-img>
+                      </v-card-text>
+                    </v-card>
+                  </v-col>
+                  <v-col
+                    cols="6"
+                    sm="6"
+                  >
+                    <v-card
+                      height="250"
+                      rounded="lg"
+                      @click="pickExtraImage('image4')"
+                    >
+                      <v-card-text
+                        class="d-flex justify-center align-center"
+                        style="height: 100%"
+                      >
+                        <v-img
+                          cover
+                          :src="extraImages.image4"
+                          class="d-flex justify-center align-center text-center"
+                        >
+                          <p class="block-text text-grey-darken-2 text-h6 text-sm-h4">
+                            Add project image
+                          </p>
+                        </v-img>
+                      </v-card-text>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+          </div>
         </v-col>
 
         <v-col
           cols="12"
-          sm="5"
+          sm="6"
         >
-          <!-- image 3 -->
-          <v-img
-            :src="extraImages.image3"
-            class="d-flex align-center justify-center text-center bg-grey"
-            @click="pickExtraImage('image3')"
+          <div
+            id="projectSectore"
+            class="mt-16 mt-sm-0"
           >
-            <p class="text-h4 font-weight-bold">
-              Add Image
-            </p>
-          </v-img>
+            <div class="d-flex mt-10 mb-5 cursor-pointer">
+              <span class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3">#</span>
+              <p class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2">
+                Explore NDDC Project Sector
+              </p>
+            </div>
+
+            <v-autocomplete
+              v-model="sector"
+              label="Project Sector"
+              :items="projects?.project"
+              variant="outlined"
+              class="mt-10"
+            />
+          </div>
+
+          <div id="aboutTheProject">
+            <div class="d-flex mt-10 mb-5 cursor-pointer">
+              <span class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3">#</span>
+              <p class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2">
+                About the Project
+              </p>
+            </div>
+
+            <v-text-field
+              v-model="projectHeading"
+              label="Project Heading"
+              variant="outlined"
+              class="mt-10"
+            />
+
+            <v-textarea
+              v-model="projectDescription"
+              label="Project Description"
+              variant="outlined"
+            />
+
+            <v-switch
+              v-model="hasVideo"
+              label="Does this project jave a video link? if (Yes) then turn on the switc and add the video link"
+              class="mt-10"
+              color="green-darken-3"
+              inset
+              hide-details
+            />
+
+            <v-text-field
+              v-if="hasVideo"
+              v-model="projectData.videoLink"
+              label="Video Link"
+              variant="outlined"
+            />
+          </div>
+
+          <div id="articleOpening">
+            <div class="d-flex mt-10 mb-5 cursor-pointer">
+              <span class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3">#</span>
+              <p class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2">
+                Article opening
+              </p>
+            </div>
+
+            <v-text-field
+              v-model="articleTitle"
+              label="Article Title"
+              variant="outlined"
+              class="mt-10"
+            />
+            <v-textarea
+              v-model="openingText"
+              label="Opening Text"
+              variant="outlined"
+            />
+          </div>
+
+          <div id="writeArticle">
+            <div class="d-flex mt-10 mb-5 cursor-pointer">
+              <span class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3">#</span>
+              <p class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2">
+                Write Article
+              </p>
+            </div>
+
+            <div
+              id="editor"
+              class="border-md"
+              style="min-height: 200px; max-height: 500px;"
+            />
+          </div>
         </v-col>
       </v-row>
-
-      <v-textarea
-        v-model="projectData.t3"
-        variant="outlined"
-        label="Say something"
-        class="mt-16"
-      />
-
-      <v-img
-        :src="extraImages.image4"
-        cover
-        class="d-flex align-center justify-center text-center bg-grey my-10"
-        @click="pickExtraImage('image4')"
-      >
-        <p class="text-h4 font-weight-bold">
-          Add Image
-        </p>
-      </v-img>
-
-      <v-textarea
-        v-model="projectData.t4"
-        variant="outlined"
-        label="Say something"
-      />
     </v-container>
 
-    <v-dialog
-      v-model="dialog"
-      width="auto"
+    <v-btn
+      position="fixed"
+      location="bottom right"
+      class="ma-16 main-text"
+      size="x-large"
+      rounded="pill"
+      color="green-darken-3"
+      :loading="loading"
+      @click="saveProject"
     >
-      <v-card
-        width="400"
-        prepend-icon="mdi-pencil"
-        title="Update web content"
-      >
-        <v-card-text>
-          <v-textarea
-            v-model="dialogProps.text"
-            label="Text"
-          />
-          <v-text-field
-            v-if="dialogProps.isLink"
-            v-model="dialogProps.link"
-            label="Link"
-          />
-        </v-card-text>
-
-        <template #actions>
-          <v-btn
-            class="ms-auto"
-            text="Ok"
-            @click="updateItem(dialogProps.field, dialogProps.text)"
-          />
-        </template>
-      </v-card>
-    </v-dialog>
+      Save Project
+    </v-btn>
   </div>
 </template>
 
 <script>
-import { db } from "@/firebase";
-import { addDoc, arrayUnion, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import { db } from '@/firebase';
+import { addDoc, arrayUnion, collection, doc, onSnapshot, serverTimestamp, updateDoc } from 'firebase/firestore';
+import Quill from 'quill';
+import "quill/dist/quill.bubble.css";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 export default {
-  data: () => ({
-    heroImage: null,
-    dialog: false,
-    extraImages: {
-      image1: null,
-      image2: null,
-      image3: null,
-      image4: null,
-    },
-    extraFiles: {
-      image1: null,
-      image2: null,
-      image3: null,
-      image4: null,
-    },
-    dialogProps: {
-      text: '',
-      link: '',
-      field: '',
-      isLink: false
-    },
-    projectData: {
-      t1: '',
-      t2: '',
-      t3: '',
-      t4: '',
-      title: '',
-      videoLink: '',
-      heading: '',
-      about: '',
-      image: null
-    }
-  }),
+  data () {
+    return {
+      projects: null,
+      quill: null,
+      loading: false,
+
+      sector: '',
+      projectHeading: '',
+      projectDescription: '',
+      articleTitle: '',
+      openingText: '',
+      hasVideo: false,
+
+      heroImage: null,
+      extraImages: {
+        image1: null,
+        image2: null,
+        image3: null,
+        image4: null,
+      },
+      extraFiles: {
+        image1: null,
+        image2: null,
+        image3: null,
+        image4: null,
+      },
+      projectData: {
+        t1: '',
+        t2: '',
+        t3: '',
+        t4: '',
+        title: '',
+        videoLink: '',
+        heading: '',
+        about: '',
+        image: null
+      }
+    };
+  },
+
+  mounted () {
+    this.initQuill();
+    this.getRealTimeProjectUpdate()
+  },
 
   methods: {
-    changeBannerImage (event) {
-      const file = event.target.files[0];
+    async getRealTimeProjectUpdate () {
+      const unsub = onSnapshot(doc(db, 'web', 'ourProjects'), (doc) => {
+        this.projects = doc.data();
+      });
+      return unsub;
+    },
 
-      if (file) {
-        const reader = new FileReader();
-        this.projectData.image = file
+    pickBannerImage () {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/*";
 
-        reader.onload = (e) => {
-          this.heroImage = e.target.result; // Base64 image preview
-        };
+      input.onchange = async (event) => {
+        const file = event.target.files[0];
 
-        reader.readAsDataURL(file);
-      }
+        if (file) {
+          const reader = new FileReader();
+          this.projectData.image = file
+
+          reader.onload = (e) => {
+            this.heroImage = e.target.result;
+          };
+
+          reader.readAsDataURL(file);
+        }
+      };
+
+      input.click();
     },
 
     pickExtraImage (imageNumber) {
@@ -312,75 +384,59 @@ export default {
       input.click();
     },
 
-    openDialog (text, link, field, isLink) {
-      this.dialog = true
-      this.dialogProps = {
-        text,
-        link,
-        isLink,
-        field
-      }
-    },
-
-    async updateItem (key, content) {
-      console.log(key, content)
-      this.projectData = {
-        ...this.projectData,
-        [key]: content
-      }
-      this.dialog = false
-    },
-
     async saveProject () {
-      const uploadTasks = [];
+      if (this.quill) {
+        const content = this.quill.root.innerHTML;
 
-      if (this.projectData.image) {
-        uploadTasks.push(this.uploadFile(this.projectData.image, `projects/heroImage/${new Date()}`, 'heroImage'));
+        const uploadTasks = [];
 
-        // Upload extra images
-        const extras = [
-          this.extraFiles.image1,
-          this.extraFiles.image2,
-          this.extraFiles.image3,
-          this.extraFiles.image4,
-        ]
-        extras.forEach((file, index) => {
-          if (file) {
-            uploadTasks.push(
-              this.uploadFile(file, `projects/extraImage${index + 1}/${new Date()}`, 'extra')
-            );
-          }
-        });
+        if (this.projectData.image) {
+          uploadTasks.push(this.uploadFile(this.projectData.image, `projects/heroImage/${new Date()}`, 'heroImage'));
+
+          // Upload extra images
+          const extras = [
+            this.extraFiles.image1,
+            this.extraFiles.image2,
+            this.extraFiles.image3,
+            this.extraFiles.image4,
+          ]
+
+          extras.forEach((file, index) => {
+            if (file) {
+              uploadTasks.push(
+                this.uploadFile(file, `projects/extraImage${index + 1}/${new Date()}`, 'extra')
+              );
+            }
+          });
 
           try {
             const uploadedImages = await Promise.all(uploadTasks);
-            console.log('save data')
-            // Save to Firestore
+
             await addDoc(collection(db, "projects"), {
-              t1: this.projectData.t1,
-              t2: this.projectData.t2,
-              t3: this.projectData.t3,
-              t4: this.projectData.t4,
-              title: this.projectData.title,
+              sector: this.sector,
+              projectHeading: this.projectHeading,
+              projectDescription: this.projectDescription,
+              articleTitle: this.articleTitle,
+              openingText: this.openingText,
+              hasVideo: this.hasVideo,
               videoLink: this.projectData.videoLink,
-              heading: this.projectData.heading,
-              about: this.projectData.about,
               images: uploadedImages,
+              content,
               timestamp: serverTimestamp()
             });
 
             await updateDoc(doc(db, 'web', 'ourProjects'), {
-              project: arrayUnion(this.projectData.title),
+              project: arrayUnion(this.sector),
               timestamp: serverTimestamp()
             })
-            console.log(uploadedImages)
 
             alert("All images uploaded successfully!");
           } catch (error) {
             console.error("Error uploading images:", error);
             alert("Failed to upload images. Please try again.");
           }
-      }
+        }
+      } else return
     },
 
     uploadFile (file, path, name) {
@@ -396,9 +452,34 @@ export default {
           reject(error);
         }
       });
-    }
+    },
+
+    initQuill () {
+      const toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'],
+        ['blockquote'],
+        ['link'],
+
+        [{ list: 'ordered' }, { list: 'bullet' }, { list: 'check' }],
+        [{ indent: '-1' }, { indent: '+1' }],
+        [{ direction: 'rtl' }],
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+        [{ color: [] }, { background: [] }],
+        [{ align: [] }],
+      ];
+
+      const options = {
+        modules: {
+          toolbar: toolbarOptions,
+        },
+        placeholder: 'New Program...',
+        theme: 'snow',
+      };
+
+      // Initialize Quill and store the instance
+      this.quill = new Quill('#editor', options);
+    },
   }
 }
 </script>
-
-<style></style>

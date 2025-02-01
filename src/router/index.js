@@ -12,6 +12,7 @@ import projectVue from "@/pages/project.vue";
 import projectsLayoutVue from "@/layouts/projectsLayout.vue";
 import newPostVue from "@/pages/newPost.vue";
 import mediaVue from "@/pages/media.vue";
+import iReport from "@/pages/iReport.vue";
 
 const staticRoutes = [
   {
@@ -65,6 +66,10 @@ const staticRoutes = [
       {
         path: ":program",
         component: Program,
+      },
+      {
+        path: "iReport",
+        component: iReport,
       },
     ],
   },
