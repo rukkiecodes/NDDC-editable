@@ -52,7 +52,8 @@
         >
           <v-img
             src="@/assets/projects.jpg"
-            height="200"
+            height="300"
+            rounded="lg"
             cover
           />
 
@@ -76,8 +77,9 @@
           sm="4"
         >
           <v-img
-            src="@/assets/programs.jpg"
-            height="200"
+            src="@/assets/bfi.jpeg"
+            height="300"
+            rounded="lg"
             cover
           />
 
@@ -96,6 +98,59 @@
             Add Programs
           </v-btn>
         </v-col>
+        <v-col
+          cols="12"
+          sm="4"
+        >
+          <v-img
+            src="@/assets/iReport.jpg"
+            height="300"
+            rounded="lg"
+            cover
+          />
+
+          <p class="block-text text-body-1 text-sm-h6 font-weight-bold mt-4">
+            iReport
+          </p>
+          <p class="main-text text-body-2 text-sm-body-1 font-weight-Regular">
+            View iReports sent from eye witneses in the Naiga Delta
+          </p>
+
+          <v-btn
+            to="/iReport"
+            color="green-darken-3"
+            class="main-text text-capitalize mt-8"
+          >
+            View Reports
+          </v-btn>
+        </v-col>
+        <v-col
+          cols="12"
+          sm="4"
+          class="mt-0 mt-sm-10"
+        >
+          <v-img
+            src="@/assets/news.jpg"
+            height="300"
+            rounded="lg"
+            cover
+          />
+
+          <p class="block-text text-body-1 text-sm-h6 font-weight-bold mt-4">
+            News Posts
+          </p>
+          <p class="main-text text-body-2 text-sm-body-1 font-weight-Regular">
+            Post new new rticles and keep the people of the Niger Delter updated with lates developments
+          </p>
+
+          <v-btn
+            to="/newPost"
+            color="green-darken-3"
+            class="main-text text-capitalize mt-8"
+          >
+            New Post
+          </v-btn>
+        </v-col>
       </v-row>
     </v-sheet>
   </v-container>
@@ -106,5 +161,3 @@ export default {
 
 }
 </script>
-
-<style></style>

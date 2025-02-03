@@ -275,7 +275,7 @@
 import { db } from '@/firebase';
 import { addDoc, arrayUnion, collection, doc, onSnapshot, serverTimestamp, updateDoc } from 'firebase/firestore';
 import Quill from 'quill';
-import "quill/dist/quill.bubble.css";
+import "quill/dist/quill.snow.css";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 export default {
