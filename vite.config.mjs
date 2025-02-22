@@ -49,8 +49,8 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       manifest: {
-        name: "NDDC",
-        short_name: "NDDC",
+        name: "NDDC Admin",
+        short_name: "NDDC Admin",
         description: "The Niger Delta Development Commission official website.",
         start_url: "/",
         display: "standalone", // Ensure it's standalone instead of fullscreen
