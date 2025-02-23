@@ -3,10 +3,10 @@
     <v-container>
       <div class="my-16">
         <p class="block-text text-h5 text-sm-h3 font-weight-bold">
-          Add a New Program to the NDDS Program List
+          Add a New Program to the NDDC Program List
         </p>
         <p class="main-text text-body-2 text-sm-body-1 mt-2">
-          Streamline your Program submission process and ensure your initiatives are part of the NDDS portfolio.
+          Streamline your Program submission process and ensure your initiatives are part of the NDDC portfolio.
         </p>
       </div>
 

@@ -3,10 +3,10 @@
     <v-container>
       <div class="my-16">
         <p class="block-text text-h5 text-sm-h3 font-weight-bold">
-          Add a New Project to the NDDS Project List
+          Add a New Project to the NDDC Project List
         </p>
         <p class="main-text text-body-2 text-sm-body-1 mt-2">
-          Streamline your project submission process and ensure your initiatives are part of the NDDS portfolio.
+          Streamline your project submission process and ensure your initiatives are part of the NDDC portfolio.
         </p>
       </div>
 
@@ -264,6 +264,7 @@
       rounded="pill"
       color="green-darken-3"
       :loading="loading"
+      :disabled="loading"
       @click="saveProject"
     >
       Save Project
@@ -285,7 +286,7 @@ export default {
       quill: null,
       loading: false,
 
-      sector: '',
+      sector: 'Transportation',
       projectHeading: '',
       projectDescription: '',
       articleTitle: '',
@@ -391,6 +392,7 @@ export default {
         const uploadTasks = [];
 
         if (this.projectData.image) {
+          this.loading = true
           uploadTasks.push(this.uploadFile(this.projectData.image, `projects/heroImage/${new Date()}`, 'heroImage'));
 
           // Upload extra images
@@ -429,6 +431,8 @@ export default {
               project: arrayUnion(this.sector),
               timestamp: serverTimestamp()
             })
+
+            this.loading = false
 
             alert("All images uploaded successfully!");
           } catch (error) {

@@ -6,7 +6,7 @@
           Add a New News Reports
         </p>
         <p class="main-text text-body-2 text-sm-body-1 mt-2">
-          Streamline your project submission process and ensure your initiatives are part of the NDDS portfolio.
+          Streamline your project submission process and ensure your initiatives are part of the NDDC portfolio.
         </p>
       </div>
 
