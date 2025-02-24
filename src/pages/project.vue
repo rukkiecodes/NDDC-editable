@@ -31,7 +31,13 @@
 
             <v-row class="mt-10">
               <v-col cols="12">
-                <v-card height="350" clas="d-flex align-center" rounded="lg" @click="pickBannerImage" flat>
+                <v-card
+                  height="350"
+                  clas="d-flex align-center"
+                  rounded="lg"
+                  @click="pickBannerImage"
+                  flat
+                >
                   <v-card-text
                     class="d-flex justify-center align-center pa-0"
                     style="height: 100%"
@@ -57,7 +63,7 @@
                     <v-card
                       height="250"
                       rounded="lg"
-                      @click="pickExtraImage('image1')"
+                      @click="pickExtraImage('image1', 1)"
                       flat
                     >
                       <v-card-text
@@ -66,7 +72,7 @@
                       >
                         <v-img
                           cover
-                          :src="extraImages.image1"
+                          :src="projectData?.images[1]?.downloadURL"
                           class="d-flex justify-center align-center text-center"
                         >
                           <p
@@ -82,7 +88,7 @@
                     <v-card
                       height="250"
                       rounded="lg"
-                      @click="pickExtraImage('image2')"
+                      @click="pickExtraImage('image2', 2)"
                       flat
                     >
                       <v-card-text
@@ -91,7 +97,7 @@
                       >
                         <v-img
                           cover
-                          :src="extraImages.image2"
+                          :src="projectData?.images[2]?.downloadURL"
                           class="d-flex justify-center align-center text-center"
                         >
                           <p
@@ -107,7 +113,7 @@
                     <v-card
                       height="250"
                       rounded="lg"
-                      @click="pickExtraImage('image3')"
+                      @click="pickExtraImage('image3', 3)"
                       flat
                     >
                       <v-card-text
@@ -116,7 +122,7 @@
                       >
                         <v-img
                           cover
-                          :src="extraImages.image3"
+                          :src="projectData?.images[3]?.downloadURL"
                           class="d-flex justify-center align-center text-center"
                         >
                           <p
@@ -132,7 +138,7 @@
                     <v-card
                       height="250"
                       rounded="lg"
-                      @click="pickExtraImage('image4')"
+                      @click="pickExtraImage('image4', 4)"
                       flat
                     >
                       <v-card-text
@@ -141,7 +147,7 @@
                       >
                         <v-img
                           cover
-                          :src="extraImages.image4"
+                          :src="projectData?.images[4]?.downloadURL"
                           class="d-flex justify-center align-center text-center"
                         >
                           <p
@@ -204,7 +210,7 @@
               counter
               class="mt-10"
               hint="Max of 50 characters"
-              maxlength="50"
+              maxlength="100"
               @update:modelValue="
                 updateField('projectHeading', projectData.projectHeading)
               "
@@ -264,8 +270,8 @@
               variant="outlined"
               counter
               class="mt-10"
-              hint="Max of 50 characters"
-              maxlength="50"
+              hint="Max of 100 characters"
+              maxlength="100"
               @update:modelValue="
                 updateField('articleTitle', projectData.articleTitle)
               "
@@ -276,8 +282,8 @@
               variant="outlined"
               counter
               class="mt-10"
-              hint="Max of 500 characters"
-              maxlength="500"
+              hint="Max of 1000 characters"
+              maxlength="1000"
               @update:modelValue="
                 updateField('openingText', projectData.openingText)
               "
@@ -451,21 +457,21 @@ export default {
               const storageRef = ref(storage, path);
               const snapshot = await uploadBytes(storageRef, file);
               const downloadURL = await getDownloadURL(snapshot.ref);
-              
-              const projectImages = [...this.projectData.images]
+
+              const projectImages = [...this.projectData.images];
               projectImages[0] = {
                 downloadURL,
                 path,
-                name: 'heroImage'
-              }
+                name: "heroImage",
+              };
 
               this.snackbar = {
                 show: true,
                 text: "Image uploaded successfully",
                 color: "success",
-              }
+              };
 
-              this.updateField('images', projectImages);
+              this.updateField("images", projectImages);
             } catch (error) {
               this.snackbar = {
                 show: true,
@@ -480,7 +486,7 @@ export default {
       input.click();
     },
 
-    pickExtraImage(imageNumber) {
+    pickExtraImage(imageNumber, index) {
       const input = document.createElement("input");
       input.type = "file";
       input.accept = "image/*";
@@ -489,20 +495,45 @@ export default {
         const file = event.target.files[0];
 
         if (file) {
-          const reader = new FileReader();
-          this.extraFiles = {
-            ...this.extraFiles,
-            [imageNumber]: file,
-          };
+          const storage = getStorage();
+          const MAX_FILE_SIZE = 2 * 1024 * 1024;
 
-          reader.onload = (e) => {
-            this.extraImages = {
-              ...this.extraImages,
-              [imageNumber]: e.target.result,
+          if (file.size > MAX_FILE_SIZE) {
+            this.snackbar = {
+              show: true,
+              text: "File size is too large. Must be less than 2MG",
+              color: "error",
             };
-          };
+            return;
+          } else {
+            try {
+              const path = `test_projects/extraImage${index}/${new Date()}`;
+              const storageRef = ref(storage, path);
+              const snapshot = await uploadBytes(storageRef, file);
+              const downloadURL = await getDownloadURL(snapshot.ref);
 
-          reader.readAsDataURL(file);
+              const projectImages = [...this.projectData.images];
+              projectImages[index] = {
+                downloadURL,
+                path,
+                name: "extra",
+              };
+
+              this.snackbar = {
+                show: true,
+                text: "Image uploaded successfully",
+                color: "success",
+              };
+
+              this.updateField("images", projectImages);
+            } catch (error) {
+              this.snackbar = {
+                show: true,
+                text: "Error uploading image",
+                color: "error",
+              };
+            }
+          }
         }
       };
 
