@@ -1,6 +1,20 @@
 <template>
   <div>
     <v-container>
+      <v-banner
+        color="warning"
+        class="bg-amber"
+        rounded="lg"
+        icon="mdi mdi-alert"
+      >
+        <template v-slot:text>
+          <strong class="block-text">Warning:</strong> All changes made on this page will reflect
+          automatically on the main website in real-time. Input values update
+          instantly, like a mirror, and any images uploaded will also be updated
+          immediately. Please note: Uploaded images must not exceed 2MB.
+        </template>
+      </v-banner>
+
       <div class="my-16">
         <p class="block-text text-h5 text-sm-h3 font-weight-bold">
           Update ({{ projectData?.projectHeading }})
