@@ -1,6 +1,18 @@
 <template>
   <div>
     <v-container>
+      <div class="d-flex justify-end my-16">
+        <v-btn
+          @click="dialog = true"
+          rounded="0"
+          color="green-darken-4"
+          size="large"
+          prepend-icon="mdi-plus"
+        >
+          <span class="text-capitalize">Add new project</span>
+        </v-btn>
+      </div>
+
       <v-row>
         <v-col
           cols="12"
@@ -10,13 +22,13 @@
           :key="project.id"
         >
           <router-link :to="`/projects/${project.id}`">
-            <v-card class="cursor-pointer" rounded="xl" flat>
+            <v-card class="cursor-pointer" rounded="lg" flat>
               <v-card-text class="pa-0">
                 <v-img
                   :src="project?.images[0]?.downloadURL"
                   height="200"
                   eager
-                  class="d-flex align-end rounded-lg cursor-pointer"
+                  class="d-flex align-end cursor-pointer"
                   cover
                 />
               </v-card-text>
@@ -27,69 +39,51 @@
     </v-container>
 
     <v-dialog v-model="dialog" fullscreen>
-      <v-container style="margin-bottom: 150px">
-        <div class="my-16">
-          <p class="block-text text-h5 text-sm-h3 font-weight-bold">
-            Add a New Project to the NDDC Project List
-          </p>
-          <p class="main-text text-body-2 text-sm-body-1 mt-2">
-            Streamline your project submission process and ensure your
-            initiatives are part of the NDDC portfolio.
-          </p>
-        </div>
+      <v-card>
+        <v-toolbar flat color="white">
+          <v-spacer />
 
-        <v-row>
-          <v-col cols="12" sm="6">
-            <div id="addProjectImages">
-              <div class="d-flex mt-10 mb-5 cursor-pointer">
-                <span
-                  class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3"
-                  >#</span
-                >
-                <div>
-                  <p
-                    class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2"
-                  >
-                    Add project Images
-                  </p>
-                  <p>Images uploaded must be withen the size of 2MB</p>
-                </div>
-              </div>
+          <v-btn @click="dialog = false" icon>
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-toolbar>
 
-              <v-row class="mt-10">
-                <v-col cols="12">
-                  <v-card
-                    height="500"
-                    rounded="lg"
-                    @click="pickBannerImage"
-                    flat
-                  >
-                    <v-card-text
-                      class="d-flex justify-center align-center pa-0"
-                      style="height: 100%"
+        <v-card-text>
+          <v-container style="margin-bottom: 150px">
+            <div class="my-16">
+              <p class="block-text text-h5 text-sm-h3 font-weight-bold">
+                Add a New Project to the NDDC Project List
+              </p>
+              <p class="main-text text-body-2 text-sm-body-1 mt-2">
+                Streamline your project submission process and ensure your
+                initiatives are part of the NDDC portfolio.
+              </p>
+            </div>
+
+            <v-row>
+              <v-col cols="12" sm="6">
+                <div id="addProjectImages">
+                  <div class="d-flex mt-10 mb-5 cursor-pointer">
+                    <span
+                      class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3"
+                      >#</span
                     >
-                      <v-img
-                        cover
-                        :src="heroImage"
-                        class="d-flex justify-center align-center text-center"
+                    <div>
+                      <p
+                        class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2"
                       >
-                        <p
-                          class="block-text text-grey-darken-2 text-h6 text-sm-h4"
-                        >
-                          Add banner image
-                        </p>
-                      </v-img>
-                    </v-card-text>
-                  </v-card>
-                </v-col>
+                        Add project Images
+                      </p>
+                      <p>Images uploaded must be withen the size of 2MB</p>
+                    </div>
+                  </div>
 
-                <v-col cols="12">
-                  <v-row>
-                    <v-col cols="6" sm="6">
+                  <v-row class="mt-10">
+                    <v-col cols="12">
                       <v-card
-                        height="250"
+                        height="500"
                         rounded="lg"
-                        @click="pickExtraImage('image1')"
+                        @click="pickBannerImage"
                         flat
                       >
                         <v-card-text
@@ -98,241 +92,271 @@
                         >
                           <v-img
                             cover
-                            :src="extraImages.image1"
+                            :src="heroImage"
                             class="d-flex justify-center align-center text-center"
                           >
                             <p
                               class="block-text text-grey-darken-2 text-h6 text-sm-h4"
                             >
-                              Add project image
+                              Add banner image
                             </p>
                           </v-img>
                         </v-card-text>
                       </v-card>
                     </v-col>
-                    <v-col cols="6" sm="6">
-                      <v-card
-                        height="250"
-                        rounded="lg"
-                        @click="pickExtraImage('image2')"
-                        flat
-                      >
-                        <v-card-text
-                          class="d-flex justify-center align-center pa-0"
-                          style="height: 100%"
-                        >
-                          <v-img
-                            cover
-                            :src="extraImages.image2"
-                            class="d-flex justify-center align-center text-center"
+
+                    <v-col cols="12">
+                      <v-row>
+                        <v-col cols="6" sm="6">
+                          <v-card
+                            height="250"
+                            rounded="lg"
+                            @click="pickExtraImage('image1')"
+                            flat
                           >
-                            <p
-                              class="block-text text-grey-darken-2 text-h6 text-sm-h4"
+                            <v-card-text
+                              class="d-flex justify-center align-center pa-0"
+                              style="height: 100%"
                             >
-                              Add project image
-                            </p>
-                          </v-img>
-                        </v-card-text>
-                      </v-card>
-                    </v-col>
-                    <v-col cols="6" sm="6">
-                      <v-card
-                        height="250"
-                        rounded="lg"
-                        @click="pickExtraImage('image3')"
-                        flat
-                      >
-                        <v-card-text
-                          class="d-flex justify-center align-center pa-0"
-                          style="height: 100%"
-                        >
-                          <v-img
-                            cover
-                            :src="extraImages.image3"
-                            class="d-flex justify-center align-center text-center"
+                              <v-img
+                                cover
+                                :src="extraImages.image1"
+                                class="d-flex justify-center align-center text-center"
+                              >
+                                <p
+                                  class="block-text text-grey-darken-2 text-h6 text-sm-h4"
+                                >
+                                  Add project image
+                                </p>
+                              </v-img>
+                            </v-card-text>
+                          </v-card>
+                        </v-col>
+                        <v-col cols="6" sm="6">
+                          <v-card
+                            height="250"
+                            rounded="lg"
+                            @click="pickExtraImage('image2')"
+                            flat
                           >
-                            <p
-                              class="block-text text-grey-darken-2 text-h6 text-sm-h4"
+                            <v-card-text
+                              class="d-flex justify-center align-center pa-0"
+                              style="height: 100%"
                             >
-                              Add project image
-                            </p>
-                          </v-img>
-                        </v-card-text>
-                      </v-card>
-                    </v-col>
-                    <v-col cols="6" sm="6">
-                      <v-card
-                        height="250"
-                        rounded="lg"
-                        @click="pickExtraImage('image4')"
-                        flat
-                      >
-                        <v-card-text
-                          class="d-flex justify-center align-center pa-0"
-                          style="height: 100%"
-                        >
-                          <v-img
-                            cover
-                            :src="extraImages.image4"
-                            class="d-flex justify-center align-center text-center"
+                              <v-img
+                                cover
+                                :src="extraImages.image2"
+                                class="d-flex justify-center align-center text-center"
+                              >
+                                <p
+                                  class="block-text text-grey-darken-2 text-h6 text-sm-h4"
+                                >
+                                  Add project image
+                                </p>
+                              </v-img>
+                            </v-card-text>
+                          </v-card>
+                        </v-col>
+                        <v-col cols="6" sm="6">
+                          <v-card
+                            height="250"
+                            rounded="lg"
+                            @click="pickExtraImage('image3')"
+                            flat
                           >
-                            <p
-                              class="block-text text-grey-darken-2 text-h6 text-sm-h4"
+                            <v-card-text
+                              class="d-flex justify-center align-center pa-0"
+                              style="height: 100%"
                             >
-                              Add project image
-                            </p>
-                          </v-img>
-                        </v-card-text>
-                      </v-card>
+                              <v-img
+                                cover
+                                :src="extraImages.image3"
+                                class="d-flex justify-center align-center text-center"
+                              >
+                                <p
+                                  class="block-text text-grey-darken-2 text-h6 text-sm-h4"
+                                >
+                                  Add project image
+                                </p>
+                              </v-img>
+                            </v-card-text>
+                          </v-card>
+                        </v-col>
+                        <v-col cols="6" sm="6">
+                          <v-card
+                            height="250"
+                            rounded="lg"
+                            @click="pickExtraImage('image4')"
+                            flat
+                          >
+                            <v-card-text
+                              class="d-flex justify-center align-center pa-0"
+                              style="height: 100%"
+                            >
+                              <v-img
+                                cover
+                                :src="extraImages.image4"
+                                class="d-flex justify-center align-center text-center"
+                              >
+                                <p
+                                  class="block-text text-grey-darken-2 text-h6 text-sm-h4"
+                                >
+                                  Add project image
+                                </p>
+                              </v-img>
+                            </v-card-text>
+                          </v-card>
+                        </v-col>
+                      </v-row>
                     </v-col>
                   </v-row>
-                </v-col>
-              </v-row>
-            </div>
-          </v-col>
+                </div>
+              </v-col>
 
-          <v-col cols="12" sm="6">
-            <div id="projectSectore" class="mt-16 mt-sm-0">
-              <div class="d-flex mt-10 mb-5 cursor-pointer">
-                <span
-                  class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3"
-                  >#</span
-                >
-                <p
-                  class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2"
-                >
-                  Explore NDDC Project Sector
-                </p>
-              </div>
+              <v-col cols="12" sm="6">
+                <div id="projectSectore" class="mt-16 mt-sm-0">
+                  <div class="d-flex mt-10 mb-5 cursor-pointer">
+                    <span
+                      class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3"
+                      >#</span
+                    >
+                    <p
+                      class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2"
+                    >
+                      Explore NDDC Project Sector
+                    </p>
+                  </div>
 
-              <v-autocomplete
-                v-model="sector"
-                label="Project Sector"
-                :items="ourProjects?.project"
-                variant="outlined"
-                class="mt-10"
-              />
-            </div>
+                  <v-autocomplete
+                    v-model="sector"
+                    label="Project Sector"
+                    :items="ourProjects?.project"
+                    variant="outlined"
+                    class="mt-10"
+                  />
+                </div>
 
-            <div id="aboutTheProject">
-              <div class="d-flex mt-10 mb-5 cursor-pointer">
-                <span
-                  class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3"
-                  >#</span
-                >
-                <p
-                  class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2"
-                >
-                  About the Project
-                </p>
-              </div>
+                <div id="aboutTheProject">
+                  <div class="d-flex mt-10 mb-5 cursor-pointer">
+                    <span
+                      class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3"
+                      >#</span
+                    >
+                    <p
+                      class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2"
+                    >
+                      About the Project
+                    </p>
+                  </div>
 
-              <v-text-field
-                v-model="projectHeading"
-                label="Project Heading"
-                variant="outlined"
-                counter
-                class="mt-10"
-                hint="Max of 50 characters"
-                maxlength="50"
-              />
+                  <v-text-field
+                    v-model="projectHeading"
+                    label="Project Heading"
+                    variant="outlined"
+                    counter
+                    class="mt-10"
+                    hint="Max of 50 characters"
+                    maxlength="50"
+                  />
 
-              <v-textarea
-                v-model="projectDescription"
-                label="Project Description"
-                variant="outlined"
-                counter
-                class="mt-10"
-                hint="Max of 250 characters"
-                maxlength="250"
-              />
+                  <v-textarea
+                    v-model="projectDescription"
+                    label="Project Description"
+                    variant="outlined"
+                    counter
+                    class="mt-10"
+                    hint="Max of 250 characters"
+                    maxlength="250"
+                  />
 
-              <v-switch
-                v-model="hasVideo"
-                label="Does this project have a video link? if (Yes) then turn on the switch and add the video link"
-                class="mt-10"
-                color="green-darken-3"
-                inset
-                hide-details
-              />
+                  <v-switch
+                    v-model="hasVideo"
+                    label="Does this project have a video link? if (Yes) then turn on the switch and add the video link"
+                    class="mt-10"
+                    color="green-darken-3"
+                    inset
+                    hide-details
+                  />
 
-              <v-text-field
-                v-if="hasVideo"
-                v-model="projectData.videoLink"
-                label="Video Link"
-                variant="outlined"
-              />
-            </div>
+                  <v-text-field
+                    v-if="hasVideo"
+                    v-model="projectData.videoLink"
+                    label="Video Link"
+                    variant="outlined"
+                  />
+                </div>
 
-            <div id="articleOpening">
-              <div class="d-flex mt-10 mb-5 cursor-pointer">
-                <span
-                  class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3"
-                  >#</span
-                >
-                <p
-                  class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2"
-                >
-                  Article opening
-                </p>
-              </div>
+                <div id="articleOpening">
+                  <div class="d-flex mt-10 mb-5 cursor-pointer">
+                    <span
+                      class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3"
+                      >#</span
+                    >
+                    <p
+                      class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2"
+                    >
+                      Article opening
+                    </p>
+                  </div>
 
-              <v-text-field
-                v-model="articleTitle"
-                label="Article Title"
-                variant="outlined"
-                counter
-                class="mt-10"
-                hint="Max of 50 characters"
-                maxlength="50"
-              />
-              <v-textarea
-                v-model="openingText"
-                label="Opening Text"
-                variant="outlined"
-                counter
-                class="mt-10"
-                hint="Max of 500 characters"
-                maxlength="500"
-              />
-            </div>
+                  <v-text-field
+                    v-model="articleTitle"
+                    label="Article Title"
+                    variant="outlined"
+                    counter
+                    class="mt-10"
+                    hint="Max of 50 characters"
+                    maxlength="50"
+                  />
+                  <v-textarea
+                    v-model="openingText"
+                    label="Opening Text"
+                    variant="outlined"
+                    counter
+                    class="mt-10"
+                    hint="Max of 500 characters"
+                    maxlength="500"
+                  />
+                </div>
 
-            <div id="writeArticle">
-              <div class="d-flex mt-10 mb-5 cursor-pointer">
-                <span
-                  class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3"
-                  >#</span
-                >
-                <p
-                  class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2"
-                >
-                  Write Article
-                </p>
-              </div>
+                <div id="writeArticle">
+                  <div class="d-flex mt-10 mb-5 cursor-pointer">
+                    <span
+                      class="text-primary font-weight-bold text-h6 text-sm-h4 mr-3"
+                      >#</span
+                    >
+                    <p
+                      class="main-text text-h6 text-sm-h4 font-weight-bold text-grey-darken-2"
+                    >
+                      Write Article
+                    </p>
+                  </div>
 
-              <div
-                id="editor"
-                class="border-md"
-                style="min-height: 200px; max-height: 500px"
-              />
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
+                  <div
+                    id="editor"
+                    class="border-md"
+                    style="min-height: 200px; max-height: 500px"
+                  />
+                </div>
+              </v-col>
+            </v-row>
+          </v-container>
 
-      <v-btn
-        position="fixed"
-        location="bottom right"
-        class="ma-16 main-text"
-        size="x-large"
-        rounded="pill"
-        color="green-darken-3"
-        :loading="loading"
-        :disabled="loading"
-        @click="saveProject"
-      >
-        Save Project
-      </v-btn>
+          <v-btn
+            position="fixed"
+            location="bottom right"
+            class="ma-16 main-text"
+            size="x-large"
+            rounded="pill"
+            color="green-darken-3"
+            :loading="loading"
+            :disabled="loading"
+            @click="saveProject"
+          >
+            Save Project
+          </v-btn>
+        </v-card-text>
+      </v-card>
     </v-dialog>
 
     <v-snackbar v-model="snackbar.show" :color="snackbar.color">
@@ -540,9 +564,11 @@ export default {
               text: "Project uploaded successfully",
               color: "success",
             };
+            this.dialog = false
           } catch (error) {
             console.error("Error uploading images:", error);
 
+            this.dialog = false
             this.loading = false;
             this.snackbar = {
               show: true,
