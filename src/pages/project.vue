@@ -31,7 +31,7 @@
 
             <v-row class="mt-10">
               <v-col cols="12">
-                <v-card height="500" rounded="lg" @click="pickBannerImage" flat>
+                <v-card height="350" clas="d-flex align-center" rounded="lg" @click="pickBannerImage" flat>
                   <v-card-text
                     class="d-flex justify-center align-center pa-0"
                     style="height: 100%"
@@ -435,14 +435,45 @@ export default {
         const file = event.target.files[0];
 
         if (file) {
-          const reader = new FileReader();
-          this.projectData.image = file;
+          const storage = getStorage();
+          const MAX_FILE_SIZE = 2 * 1024 * 1024;
 
-          reader.onload = (e) => {
-            this.heroImage = e.target.result;
-          };
+          if (file.size > MAX_FILE_SIZE) {
+            this.snackbar = {
+              show: true,
+              text: "File size is too large. Must be less than 2MG",
+              color: "error",
+            };
+            return;
+          } else {
+            try {
+              const path = `test_projects/bannerImage/${new Date()}`;
+              const storageRef = ref(storage, path);
+              const snapshot = await uploadBytes(storageRef, file);
+              const downloadURL = await getDownloadURL(snapshot.ref);
+              
+              const projectImages = [...this.projectData.images]
+              projectImages[0] = {
+                downloadURL,
+                path,
+                name: 'heroImage'
+              }
 
-          reader.readAsDataURL(file);
+              this.snackbar = {
+                show: true,
+                text: "Image uploaded successfully",
+                color: "success",
+              }
+
+              this.updateField('images', projectImages);
+            } catch (error) {
+              this.snackbar = {
+                show: true,
+                text: "Error uploading image",
+                color: "error",
+              };
+            }
+          }
         }
       };
 
